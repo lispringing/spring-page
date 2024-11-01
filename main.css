@@ -1,6 +1,4 @@
-@charset  "UTF-8";
-
-:root{
+@charset "UTF-8";:root {
   --heo-white: #fff;
   --heo-white-op: rgba(255,255,255,0.2);
   --heo-black: #000;
@@ -27,12 +25,12 @@
   --style-border-always: 1px solid var(--heo-card-border);
   --style-border-hover: 1px solid var(--heo-main);
   --style-border-hover-always: 1px solid var(--heo-main);
-  --style-border-dashed: 1px dashed var(--heo-theme-op);
+  --style-border-dashed: 1px dashed var(--heo-theme-op)
 }
 
 ::selection {
   background: var(--heo-fontcolor);
-  color: var(--heo-background);
+  color: var(--heo-background)
 }
 
 :root {
@@ -44,7 +42,7 @@
   --heo-red: #D8213C;
   --heo-pink: #FF7C7C;
   --heo-green: #28a63f;
-  --heo-yellow: #c28b00;
+  --heo-yellow: #f8d469;
   --heo-yellow-op: #d99c001a;
   --heo-orange: #ffc635;
   --heo-fontcolor: #00001e;
@@ -62,51 +60,61 @@
   --heo-post-blockquote-bg: #fafcff;
   --heo-post-tabs-bg: #f2f5f8;
   --heo-secondbg: #eaeaea;
-  --heo-shadow-nav:0 5px 12px -5px rgba(102, 68, 68, 0.05);
+  --heo-shadow-nav: 0 5px 12px -5px rgba(102, 68, 68, 0.05);
   --heo-card-bg: #fff;
   --heo-card-bg-op: var(--heo-black-op);
   --heo-card-bg-none: rgba(255, 255, 255, 0);
-  --heo-shadow-lightblack:0 5px 12px -5px rgba(102, 68, 68, 0.00);
-  --heo-shadow-light2black:0 5px 12px -5px rgba(102, 68, 68, 0.00);
+  --heo-shadow-lightblack: 0 5px 12px -5px rgba(102, 68, 68, 0.00);
+  --heo-shadow-light2black: 0 5px 12px -5px rgba(102, 68, 68, 0.00);
   --heo-card-border: #e3e8f7;
   --heo-shadow-border: 0 8px 16px -4px #2c2d300c;
-  --style-border-forever: 2px solid var(--heo-main);
+  --style-border-forever: 2px solid var(--heo-main)
 }
 
 @keyframes floating {
-  0% { transform: translate(0,  0px); }
-  50%  { transform: translate(0, 10px); }
-  100%   { transform: translate(0, 0px); }   
+  0% {
+      transform: translate(0,0)
+  }
+
+  50% {
+      transform: translate(0,10px)
+  }
+
+  100% {
+      transform: translate(0,0)
+  }
 }
 
 @keyframes showbanner {
   0% {
-    top: 0px;
-    background: var(--heo-theme);
+      top: 0;
+      background: var(--heo-red)
   }
+
   30% {
-    top: 40px;
+      top: 60px
   }
+
   80% {
-    background: var(--heo-theme);
+      background: var(--heo-red)
   }
+
   100% {
-    background: var(--heo-secondbg);
+      background: var(--heo-secondbg)
   }
 }
 
 @keyframes showbannertext {
   0% {
-    color: var(--heo-white);
+      color: var(--heo-white)
   }
-  30% {
-    
-  }
+
   80% {
-    color: var(--heo-white);
+      color: var(--heo-white)
   }
+
   100% {
-    color: var(--heo-fontcolor);
+      color: var(--heo-fontcolor)
   }
 }
 
@@ -115,24 +123,24 @@ body {
   display: flex;
   margin: auto;
   flex-direction: column;
-  font-family: PingFangSC-Regular, Roboto, Helvetica Neue, Helvetica, Tahoma,
-    Arial, PingFang SC-Light, Microsoft YaHei;
+  font-family: PingFangSC-Regular,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,PingFang SC-Light,Microsoft YaHei;
   align-items: center;
+  width: 100%
 }
 
 body .need-padding {
   max-width: 1200px;
-  width: 90%;
+  width: 90%
 }
 
 a {
-  text-decoration:none;
-  user-select:none;
-  -webkit-user-drag: none;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-drag: none
 }
 
 span {
-  user-select:none;
+  user-select: none
 }
 
 sup {
@@ -144,16 +152,20 @@ sup {
   margin-left: 6px;
   white-space: nowrap;
   position: absolute;
-  top: -4px;
+  top: -4px
 }
 
 sup.hot {
-  background: var(--heo-red);
+  background: var(--heo-red)
+}
+
+sup.error {
+  background: var(--heo-gray)
 }
 
 img {
-  user-select:none;
-  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-drag: none
 }
 
 .nav {
@@ -166,8 +178,16 @@ img {
   background: var(--heo-navbg);
   align-items: center;
   z-index: 2;
-  transition: ease-in-out 0.3s;
-  backdrop-filter: blur(10px); /* 调整模糊效果的值 */
+  transition: ease-in-out .3s;
+  backdrop-filter: blur(10px)
+}
+
+.nav.top {
+  background: var(--heo-background)
+}
+
+.nav.top a.nav-item {
+  color: var(--heo-fontcolor)
 }
 
 .nav-content {
@@ -178,7 +198,7 @@ img {
   align-items: center;
   height: 60px;
   z-index: 2;
-  transition: ease-in-out 0.3s;
+  transition: ease-in-out .3s
 }
 
 .nav-banner {
@@ -188,76 +208,85 @@ img {
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 44px;
+  top: 60px;
   left: 0;
   animation: showbanner 4s ease-in-out;
   z-index: 1;
-  background: var(--heo-secondbg);
-  
+  background: var(--heo-secondbg)
 }
 
-.nav-banner a{
+.nav-banner a {
   font-size: 12px;
-  transition: ease-in-out 0.3s;
+  transition: ease-in-out .3s;
   animation: showbannertext 4s ease-in-out;
-  color: var(--heo-fontcolor);
+  color: var(--heo-fontcolor)
 }
 
 .nav-banner a:hover {
-  color: var(--heo-main);
+  color: var(--heo-red)
 }
 
 .nav-right .nav-menu {
-  display: none;
+  display: none
 }
 
 a.site-logo {
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
 img.site-logo-img {
-  width: 25px;
+  width: 25px
 }
 
 .menu-list {
-  display: none;
+  display: none
 }
 
 .banner-img {
   width: 405px;
   max-width: 100%;
-  animation: floating 4s ease-in-out infinite;
-  pointer-events:none;
-  object-fit:cover;
-  transform: translate(0,  -7px);
+  pointer-events: none;
+  object-fit: cover;
+  transform: translate(0,-7px);
+  max-width: 90%;
+  filter: drop-shadow(2px 4px 8px #f7d1685a)
 }
+
 
 span.site-name {
   color: var(--heo-white);
   font-size: 14px;
-  margin-left: 8px;
+  margin-left: 8px
+}
+
+.nav.top span.site-name {
+  color: var(--heo-fontcolor)
 }
 
 a.nav-item {
   color: var(--heo-white);
-  opacity: 0.8;
-  transition: ease-in-out 0.3s;
+  opacity: .8;
+  transition: ease-in-out .3s;
   font-size: 14px;
   margin: 0 2px;
   padding: 4px 8px;
-  border-radius: 16px;
+  border-radius: 16px
 }
 
 a.nav-item:hover {
   opacity: 1;
   background: var(--heo-card-bg);
-  color: var(--heo-fontcolor);
+  color: var(--heo-fontcolor)
+}
+
+.nav.top a.nav-item:hover {
+  background: var(--heo-secondbg)
 }
 
 .nav-right {
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
 .first-stack {
@@ -265,7 +294,7 @@ a.nav-item:hover {
   justify-content: space-between;
   margin-top: 180px;
   margin-bottom: 120px;
-  align-items: center;
+  align-items: center
 }
 
 .title-group {
@@ -275,8 +304,11 @@ a.nav-item:hover {
   font-weight: 400;
   color: #00001e;
   line-height: 75px;
-  font-weight: bold;
+  font-weight: 700;
   font-family: system-ui;
+  letter-spacing: 0;
+  line-height: 75px;
+  text-shadow: 0 9px 41px rgba(0,0,0,.12)
 }
 
 span.discription-text {
@@ -286,7 +318,7 @@ span.discription-text {
   color: #00001e;
   line-height: 34px;
   margin-top: 28px;
-  font-weight: bold;
+  font-weight: 700
 }
 
 a.about-button {
@@ -295,88 +327,96 @@ a.about-button {
   background: var(--heo-card-btn-bg);
   color: var(--heo-white);
   border-radius: 29px;
-  box-shadow: 0px 12px 12px -9px rgba(0,0,0,0.29);
+  box-shadow: 0 12px 12px -9px rgba(0,0,0,.29);
   margin-top: 64px;
   width: fit-content;
-  transition: ease-in-out 0.3s;
+  transition: ease-in-out .3s;
   white-space: nowrap;
   align-items: center;
   justify-content: center;
-  height: 48px;
+  height: 48px
 }
 
 a.about-button:hover {
   background: var(--heo-main);
-  box-shadow: 0px 12px 12px -9px rgba(5, 51, 137, 0.29);
+  box-shadow: 0 12px 12px -9px rgba(5,51,137,.29)
 }
 
 .product-group {
   margin: 0;
-  width: 100%;
+  width: 100%
 }
 
 h2.group-title {
-  font-size: 32px;
-  margin-bottom: 0;
+  font-size: 64;
+  margin-bottom: 0
 }
 
 .group-description {
   font-size: 14px;
-  color: var(--heo-secondtext);
+  color: var(--heo-secondtext)
 }
 
 .group-items {
   display: flex;
   margin-top: 60px;
   flex-direction: row;
-  flex-wrap: wrap;
-  
+  flex-wrap: wrap
 }
 
 .group-item {
   display: flex;
   width: calc(100% / 3);
-  margin-bottom: 60px;
+  margin-bottom: 60px
 }
 
 a.group-item-icon {
   width: 100px;
   height: 100px;
+  display: flex;
+  align-items: center;
+  user-select: none
 }
 
 img.group-item-icon-img {
   width: 100px;
   height: 100px;
   border-radius: 28px;
+  filter: drop-shadow(2px 4px 8px #100c2610)
+}
+
+img.group-item-icon-img.error {
+  filter: grayscale(100%)
 }
 
 .group-info-button {
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
 span.linkbotton-tips {
   display: flex;
   margin-left: 10px;
   font-size: 12px;
-  color: var(--heo-secondtext);
+  color: var(--heo-secondtext)
 }
 
 .special-card span.linkbotton-tips {
   color: var(--heo-white);
+  opacity: .6
 }
 
 .group-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: column
 }
 
 .group-info-group {
-  margin-left: 36px;
+  margin-left: 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100px;
+  height: 100px
 }
 
 .group-info-group a.title {
@@ -386,11 +426,11 @@ span.linkbotton-tips {
   margin-bottom: 8px;
   width: fit-content;
   position: relative;
-  font-weight: bold;
+  font-weight: 700
 }
 
 .group-info-group a.discription {
-  color: var(--heo-fontcolor);
+  color: var(--heo-secondtext);
   font-size: 14px;
   width: fit-content;
   max-width: 220px;
@@ -398,8 +438,8 @@ span.linkbotton-tips {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* 这里是超出几行省略 */
-  overflow: hidden;
+  -webkit-line-clamp: 1;
+  overflow: hidden
 }
 
 a.linkbutton {
@@ -409,17 +449,21 @@ a.linkbutton {
   color: var(--heo-white);
   font-size: 14px;
   border-radius: 21px;
-  transition: ease-in-out 0.3s;
+  transition: ease-in-out .3s;
   width: fit-content;
-  white-space: nowrap;
+  white-space: nowrap
 }
 
 a.linkbutton:hover {
-  filter: brightness(1.2);
+  filter: brightness(1.2)
 }
 
 a.linkbutton:active {
-  filter: brightness(0.8);
+  filter: brightness(.8)
+}
+
+a.linkbutton.error {
+  background: var(--heo-gray)
 }
 
 .footer {
@@ -429,35 +473,33 @@ a.linkbutton:active {
   width: 100%;
   background: var(--heo-secondbg);
   margin-top: 80px;
-  align-items: center;
+  align-items: center
 }
 
 .footer .info {
   font-size: 12px;
   margin: 0 20px;
-  opacity: 0.6;
+  opacity: .6;
   color: var(--heo-fontcolor);
-  transition: ease-in-out 0.3s;
-  margin: 4px 0;
+  transition: ease-in-out .3s;
+  margin: 4px 0
 }
 
 .footer a.info:hover {
-  opacity: 1;
+  opacity: 1
 }
 
 .footer .info-group .info:not(:first-child) {
-  margin-left: 4px;
+  margin-left: 4px
 }
 
 .footer-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: column
 }
 
-/* banner */
-
 .product-banner {
-  background-image: linear-gradient(180deg, #02162A 0%, #00001e 100%);
+  background-image: linear-gradient(180deg,#02162a 0,#00001e 100%);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -467,51 +509,51 @@ a.linkbutton:active {
   margin: 40px 0;
   overflow: hidden;
   position: relative;
-  min-height: 800px;
+  min-height: 800px
 }
 
 .banner-info {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center
 }
 
 .product-banner .tips {
   color: var(--heo-vip);
-  font-size: 14px;
+  font-size: 14px
 }
 
 .product-banner span.title {
   font-size: 56px;
   color: var(--heo-white);
-  font-weight: bold;
+  font-weight: 700;
   text-align: center;
   line-height: 60px;
-  margin-top: 12px;
+  margin-top: 12px
 }
 
 span.punctuation {
-  position: absolute;
+  position: absolute
 }
 
 .banner-discription-group {
   display: flex;
   flex-direction: column;
   align-items: center;
-  opacity: 0.8;
-  margin: 24px 0 32px 0;
+  opacity: .8;
+  margin: 24px 0 32px 0
 }
 
 .product-banner span.description {
   font-size: 16px;
   color: var(--heo-white);
-  text-align: center;
+  text-align: center
 }
 
 .link-group {
   margin-bottom: 24px;
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
 a.primary-button {
@@ -519,25 +561,25 @@ a.primary-button {
   background: var(--heo-white);
   color: var(--heo-fontcolor);
   border-radius: 26px;
-  transition: ease-in-out 0.3s;
-  white-space: nowrap;
+  transition: ease-in-out .3s;
+  white-space: nowrap
 }
 
 a.primary-button:hover {
   background: var(--heo-black);
-  color: var(--heo-white);
+  color: var(--heo-white)
 }
 
 a.second-link {
   color: var(--heo-white);
-  opacity: 0.6;
+  opacity: .6;
   font-size: 14px;
   margin-left: 12px;
-  transition: ease-in-out 0.3s;
+  transition: ease-in-out .3s
 }
 
 a.second-link:hover {
-  opacity: 1;
+  opacity: 1
 }
 
 .banner-pic {
@@ -546,32 +588,34 @@ a.second-link:hover {
   justify-content: center;
   height: 400px;
   position: absolute;
-  bottom: 100px;
+  bottom: 100px
 }
 
 .banner-pic-img {
   max-width: 968px;
   width: 100%;
-  margin: auto;
+  margin: auto
 }
 
 .inline-word {
   word-break: keep-all;
-  white-space: nowrap;
+  white-space: nowrap
 }
 
 .first-stack-links {
   display: flex;
+  flex-wrap: wrap
 }
 
 .about-button.social-button {
   margin-left: 8px;
-  padding: 0 16px;
+  padding: 0 16px
 }
 
 .about-button.social-button i {
   font-size: 20px;
   line-height: 1;
+  min-width: 20px
 }
 
 .special-card {
@@ -582,46 +626,46 @@ a.second-link:hover {
   position: relative;
   display: flex;
   overflow: hidden;
-  height: 500px;
+  height: 500px
 }
 
 .special-card-left {
   padding: 54px 0 54px 75px;
   z-index: 1;
   width: 100%;
-  position: relative;
+  position: relative
 }
 
 .special-card-left .tips {
   font-size: 18px;
-  font-weight: bold;
-  color: var(--heo-white);
+  font-weight: 700;
+  color: var(--heo-white)
 }
 
 .special-card-left .title {
   font-size: 40px;
-  font-weight: bold;
+  font-weight: 700;
   max-width: 400px;
   line-height: 1.2;
   margin-top: 8px;
   max-width: calc(100% - 700px);
-  color: var(--heo-white);
+  color: var(--heo-white)
 }
 
 .special-card-left .discription {
   font-size: 16px;
   margin-top: 24px;
-  opacity: 0.8;
+  opacity: .8;
   line-height: 1.2;
   max-width: calc(100% - 700px);
-  color: var(--heo-white);
+  color: var(--heo-white)
 }
 
 .special-card-left .button-group {
   position: absolute;
   bottom: 56px;
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
 .special-card-right {
@@ -630,15 +674,15 @@ a.second-link:hover {
   top: 0;
   height: 100%;
   display: flex;
-  z-index: 0;
+  z-index: 0
 }
 
 .avatar-discription {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-content: center;
-  padding: 24px 32px;
-  background: var(--heo-white);
+  padding: 24px 24px;
+  background: linear-gradient(to bottom,snow 0,#fff 100%);
   margin: 0 5%;
   border-radius: 12px;
   line-height: 1.5;
@@ -646,264 +690,365 @@ a.second-link:hover {
   margin-top: 18px;
   border: var(--style-border-always);
   box-shadow: var(--heo-shadow-border);
+  flex-wrap: wrap;
+  justify-content: space-between
 }
 
 .avatar-discription-text {
   display: flex;
   font-size: 16px;
-  text-align: center;
+  text-align: left;
+  width: calc(100% - 330px);
+  padding: 20px 40px;
+  background: #ffdd601d;
+  border-radius: 12px;
+  align-items: center;
+  border: var(--style-border-always);
+  border-color: var(--heo-orange)
+}
+
+.avatar-discription-text p {
+  margin: 0
+}
+
+.avatar-discription-text b {
+  color: #c87500
+}
+
+.avatar-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px
 }
 
 span.avatar-name {
   display: flex;
   margin: auto;
-  font-size: 16px;
+  font-size: 24px;
   opacity: 1;
-  margin-top: 14px;
+  margin-top: 8px;
+  font-weight: 700
 }
 
 .avatar-image {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  margin: auto;
-  margin-top: 28px;
-  border: 4px solid white;
+  border: 4px solid #fff;
   box-shadow: var(--heo-shadow-lightblack);
+  filter: drop-shadow(2px 4px 12px #ec625b2e)
 }
 
 .avatar-title {
   display: flex;
   margin: auto;
   font-size: 14px;
-  opacity: 0.6;
+  opacity: .6;
   text-align: center;
+  max-width: 200px
 }
-
 
 @media screen and (max-width: 1200px) {
   .group-item {
-    width: 50%;
+      width:50%
   }
 
   .special-card {
-    display: none;
+      display: none
   }
-
 }
 
 @media screen and (max-width: 768px) {
+  .group-info {
+      margin-right:20px
+  }
+
+  img.group-item-icon-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px
+  }
+
+  .group-info-group {
+      margin-left: 12px;
+      height: 100px;
+      flex-direction: row;
+      width: 100%;
+      align-items: center;
+      margin-left: 20px
+  }
+
   .first-stack {
-    margin-bottom: 20px;
+      margin-bottom: 20px;
+      flex-direction: column;
+      margin-top: 112px
   }
 
   .left-Introduce {
-    margin-bottom: 40px;
+      margin-bottom: 40px;
+      margin-right: auto
   }
 
   a.about-button {
-    margin-top: 40px;
+      margin-top: 28px
   }
-  
+
   .group-items {
-    margin-top: 30px;
+      margin-top: 30px
   }
 
   body .need-padding {
-    width: 80%;
-  }
-
-  .first-stack {
-    flex-direction: column;
-    margin-top: 120px;
+      width: calc(100% - 64px)
   }
 
   .product-group {
-    margin:  0px;
+      margin: 0
   }
-  
+
   .group-item {
-    width: 100%;
+      width: 100%;
+      margin-bottom: 30px
   }
 
   .footer {
-    flex-direction: column;
-    margin-top: 20px;
+      flex-direction: column;
+      margin-top: 20px
   }
 
   .footer .info {
-    margin-bottom: 12px;
+      margin-bottom: 12px
   }
 
   .show-menu .nav {
-    background: var(--heo-fontcolor);
+      background: var(--heo-fontcolor)
   }
 
-  .show-menu .nav-content {
-    background: var(--heo-fontcolor);
+  .nav-content {
+      width: 80%
   }
 
   .nav-right .nav-item {
-    display: none;
+      display: none
+  }
+
+  .show-menu .nav.top span.site-name {
+      color: var(--heo-white)
+  }
+
+  body:not(.show-menu) .nav.top .nav-menu {
+      color: var(--heo-fontcolor)
+  }
+
+  .show-menu span.site-name {
+      color: var(--heo-white)
   }
 
   .nav-right .nav-menu {
-    display: flex;
-    color: var(--heo-white);
-    padding: 8px 0 8px 8px;
+      display: flex;
+      color: var(--heo-white);
+      padding: 8px 0 8px 8px
   }
 
   .product-banner span.title {
-    font-size: 40px;
-    line-height: 46px;
+      font-size: 40px;
+      line-height: 46px
   }
 
   .menu-list {
-    display: flex;
-    position: fixed;
-    flex-direction: column;
-    top: 60px;
-    background: var(--heo-fontcolor);
-    width: 100%;
-    height: 0%;
-    z-index: 10;
-    align-items: center;
-    overflow: hidden;
-    transition: ease-in-out 0.3s;
-    opacity: 0;
+      display: flex;
+      position: fixed;
+      flex-direction: column;
+      top: 60px;
+      background: #00001eee;
+      width: 100%;
+      height: 0%;
+      z-index: 10;
+      align-items: center;
+      overflow: hidden;
+      transition: ease-in-out .3s;
+      opacity: 0;
+      backdrop-filter: blur(12px);
+      padding-top: 40px
   }
 
   .show-menu .menu-list {
-    height: 100%;
-    opacity: 1;
+      height: 100%;
+      opacity: 1
   }
 
   .menu-list a.nav-item {
-    padding: 8px 8px;
-    font-size: 16px;
-    border-bottom: 1px solid #ffffff53;
-    width: 90%;
-    margin-left: 0;
+      padding: 8px 8px;
+      font-size: 16px;
+      border-bottom: 1px solid #ffffff1e;
+      width: 90%;
+      margin-left: 0;
+      border-radius: 0;
+      width: 80%
   }
 
   .show-menu .menu-list a.nav-item {
-    padding: 12px 8px;
+      padding: 12px 8px
   }
-  
+
   .banner-pic {
-    margin-top: 20px;
-    height: 200px;
-    bottom: 40px;
+      margin-top: 20px;
+      height: 200px;
+      bottom: 40px
   }
 
   .product-banner {
-    padding-top: 60px;
-    min-height: 520px;
+      padding-top: 60px;
+      min-height: 580px
   }
 
   h2.group-title {
-    margin: 0;
+      margin: 0;
+      font-size: 20px
+  }
+
+  .group-info-group a.title {
+      font-size: 16px
   }
 
   a.linkbutton {
-    margin-left: 0px;
+      margin-left: 0
   }
 
   .banner-img {
-    height: 100%;
+      height: 100%;
+      width: 100%;
+      max-width: 100%
   }
 
   .banner-pic-img {
-    width: 100vw;
+      width: 100vw
   }
 
   .nav-center {
-    display: none;
+      display: none
   }
+
+  .title-group .title {
+      font-size: 32px;
+      line-height: 38px
+  }
+
+  .avatar-discription-text {
+      padding: 20px;
+      width: 100%
+  }
+
+  .avatar-info {
+      width: 100%;
+      margin-top: 20px
+  }
+
+  .group-info-group a.discription {
+      -webkit-line-clamp: 2
+  }
+
+  .group-info-button {
+      flex-direction: column
+  }
+
+  span.linkbotton-tips {
+      margin-left: 0;
+      margin-top: 4px;
+      font-size: 10px
+  }
+
+  span.discription-text {
+      font-size: 24px;
+      line-height: 30px;
+      margin-top: 16px
+  }
+
 }
 
 @media screen and (max-width: 375px) {
   .first-stack {
-    margin-bottom: 20px;
+      margin-bottom:20px
   }
 
   .left-Introduce {
-    margin-bottom: 40px;
+      margin-bottom: 40px
   }
 
   a.about-button {
-    margin-top: 40px;
+      margin-top: 20px
   }
-  
+
   .group-items {
-    margin-top: 30px;
+      margin-top: 30px
   }
 
   .group-item {
-    flex-direction: row;
+      flex-direction: row
   }
+
   .group-info-group {
-    margin-left: 20px;
-    flex-direction: row;
-    width: 100%;
-    height: 45px;
+      margin-left: 20px;
+      flex-direction: row;
+      width: 100%;
+      height: 45px
   }
 
   .group-info-button {
-    margin-top: 0px;
-    flex-direction: column;
+      margin-top: 0;
+      flex-direction: column
   }
 
   span.linkbotton-tips {
-    margin-top: 4px;
+      margin-top: 4px
   }
 
   .product-group {
-    margin: 0;
+      margin: 0
   }
 
-  img.group-item-icon-img,a.group-item-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
+  a.group-item-icon,img.group-item-icon-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px
   }
 
   .product-banner {
-    padding-top: 40px;
+      padding-top: 40px
   }
 
   .banner-pic {
-    margin-top: 0px;
-    height: 150px;
+      margin-top: 0;
+      height: 150px
   }
 
   h2.group-title {
-    margin: 0;
+      margin: 0
   }
 
   a.linkbutton {
-    margin-left: 8px;
+      margin-left: 8px
   }
 
   .footer {
-    margin-top: 20px;
+      margin-top: 20px
   }
 
   .title-group .title {
-    font-size: 35px;
-    line-height: 1.2;
+      font-size: 35px;
+      line-height: 1.2
   }
 
   span.discription-text {
-    font-size: 16px;
-    line-height: 1.2;
+      font-size: 16px;
+      line-height: 1.2
   }
 
   a.about-button {
-    padding: 0 24px;
+      padding: 0 24px
   }
 
   .nav-center {
-    display: none;
+      display: none
   }
 }
