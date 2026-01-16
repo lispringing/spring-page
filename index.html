@@ -74,6 +74,11 @@
     </a>
   </div>
   
+
+	
+<!--End-->
+
+
 <!--作者自我描述-->
 <div class="avatar-discription">
   <span class="avatar-discription-text">
@@ -430,13 +435,32 @@
   <div class="footer">
     <div class="footer-content need-padding">
       <span class="info">Copyright © 2022-至今 <font color="#2b9fff">小春子</font>💖 保留所有权利。</span>
-      <span class="info">由 <font color="#2b9fff">鲸鱼1.0框架</font> 强力驱动 运行基于 <font color="#2b9fff">Spring</font> 服务器</span>
+      <span class="info">由 <font color="#2b9fff">鲸鱼1.0框架</font> 强力驱动 由 <font color="#2b9fff">小春子</font> 用心维护</span>
       <div class="info-group"><a class="info" href="https://beian.miit.gov.cn/" target="_blank">鲁ICP备2022030058号</a></div>
+      <div class="info"id="hitokoto">正在加载</div><!--每日一言-->
     </div>
   </div>
 </body>
 <script src="./js/simpleParallax.min.js"></script>
 <script src="./js/main.js"></script>
 <script src="./js/console.js"></script>
+<script src="./js/fetch.js"></script>
+<script src="./js/bluebird.js"></script>
+
+
+
+<script>
+  fetch('https://v1.hitokoto.cn')
+    .then(function (res){
+      return res.json();
+    })
+    .then(function (data) {
+      var hitokoto = document.getElementById('hitokoto');
+      hitokoto.innerText = data.hitokoto; 
+    })
+    .catch(function (err) {
+      console.error(err);
+    })
+</script>
 </body>
 </html>
