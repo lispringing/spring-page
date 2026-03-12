@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>礼乐齐鲁-每日文物</title>
+    <link rel="icon" type="image/png" href="./img/logo.png">
+    <style>
+        /* 原有样式保持不变，此处省略（可直接复用原代码的style部分） */
+        /* 全局重置 & 苹果风格基础配置 */
+            /* 全局样式基础 - 楷体字体体系 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* 楷体为主，保留系统字体降级适配 */
+            font-family: "楷体", "KaiTi", "STKaiti", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            /* 替换为更贴合文物主题的背景图（可自行替换为本地/在线文物纹理图） */
+            background: url('./img/background.png') no-repeat center center / cover fixed;
+            color: #1d1d1f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            /* 增加背景叠加层，提升内容可读性 */
+            position: relative;
+        }
+
+        /* 背景叠加层（降低背景亮度，保证文字清晰） */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(245, 245, 247, 0.61); /* 苹果浅灰+半透明 */
+            z-index: -1;
+        }
+
+        /* 头部标题（苹果风格轻量化） */
+        .header {
+            margin: 30px 0;
+            text-align: center;
+            /* 增加文字阴影，提升辨识度 */
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+
+        .header p {
+            font-size: 17px;
+            color: #86868b;
+        }
+
+        /* 文物卡片（核心容器，苹果磨砂/圆角风格） */
+        .relic-card {
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.9); /* 卡片半透明，透出背景 */
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px); /* 苹果磨砂玻璃效果 */
+            -webkit-backdrop-filter: blur(10px); /* 兼容iOS */
+        }
+
+        .relic-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 文物图片容器 */
+        .relic-img-wrapper {
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+        }
+
+        .relic-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .relic-card:hover .relic-img {
+            transform: scale(1.02);
+        }
+
+        /* 文物信息区域 */
+        .relic-info {
+            padding: 30px;
+        }
+
+        .relic-name {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1d1d1f;
+        }
+
+        .relic-desc {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #424245;
+            margin-bottom: 20px;
+        }
+
+        .relic-date {
+            font-size: 15px;
+            color: #86868b;
+        }
+
+        /* 苹果风格按钮容器 */
+        .btn-group {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 30px;
+            display: flex;
+            gap: 16px;
+            padding: 0 10px;
+        }
+
+        /* 苹果风格按钮通用样式 */
+        .apple-btn {
+            flex: 1;
+            height: 48px;
+            border-radius: 24px;
+            border: none;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* 返回主页按钮（苹果浅灰风格） */
+        .home-btn {
+            background-color: rgba(245, 245, 247, 0.9);
+            color: #1d1d1f;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .home-btn:hover {
+            background-color: rgba(232, 232, 237, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 分享按钮（苹果蓝色风格，匹配iOS系统按钮） */
+        .share-btn {
+            background-color: rgba(0, 113, 227, 0.9);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .share-btn:hover {
+            background-color: rgba(0, 119, 237, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.4);
+        }
+
+        /* 按钮图标（简化版，模拟苹果图标风格） */
+        .btn-icon {
+            font-size: 20px;
+        }
+
+        /* 响应式适配（苹果风格多端兼容） */
+        @media (max-width: 768px) {
+            .relic-img-wrapper {
+                height: 300px;
+            }
+
+            .relic-info {
+                padding: 20px;
+            }
+
+            .relic-name {
+                font-size: 24px;
+            }
+
+            .relic-desc {
+                font-size: 16px;
+            }
+
+            .apple-btn {
+                height: 44px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .relic-img-wrapper {
+                height: 220px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .apple-btn {
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>每日文物</h1>
+        <p>每日探索一件珍贵文物，感受历史的温度</p>
+    </div>
+
+    <div class="relic-card">
+        <div class="relic-img-wrapper">
+            <img id="relicImg" class="relic-img" src="./img/background.png">
+        </div>
+        <div class="relic-info">
+            <h2 id="relicName" class="relic-name"></h2>
+            <p id="relicDesc" class="relic-desc"></p>
+            <p class="relic-date">今日推荐：<span id="todayDate"></span></p>
+        </div>
+    </div>
+
+    <!-- 苹果风格按钮组 -->
+    <div class="btn-group">
+        <button class="apple-btn home-btn">
+            <span class="btn-icon">🏠</span>
+            <span>返回主页</span>
+        </button>
+        <button class="apple-btn share-btn">
+            <span class="btn-icon">📤</span>
+            <span>分享到朋友圈</span>
+        </button>
+    </div>
+
+    <script>
+        // 1. 新增：加载JSON数据的函数
+        async function loadRelicData() {
+            try {
+                // 加载本地JSON文件
+                const response = await fetch('./json/index.json');
+                if (!response.ok) {
+                    throw new Error(`加载JSON失败：${response.status}`);
+                }
+                const relicList = await response.json();
+                return relicList;
+            } catch (error) {
+                console.error('JSON加载出错：', error);
+                // 加载失败时的兜底数据（可选）
+                return [];
+            }
+        }
+
+        // 2. 原有逻辑：计算今日文物索引（保持不变）
+        function getTodayRelicIndex(relicListLength) {
+            // 获取当前日期的时间戳（仅按日期计算，忽略时分秒）
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayTime = today.getTime();
+            
+            // 基准日期（可自定义，比如数据上线日期）
+            const baseDate = new Date(2026, 0, 1); // 2024年1月1日
+            baseDate.setHours(0, 0, 0, 0);
+            const baseTime = baseDate.getTime();
+            
+            // 计算相差的天数
+            const dayDiff = Math.floor((todayTime - baseTime) / (24 * 60 * 60 * 1000));
+            
+            // 按文物列表长度取模，实现循环轮播
+            return dayDiff % relicListLength;
+        }
+
+        // 3. 修改：渲染今日文物内容（改为异步加载JSON后渲染）
+        async function renderTodayRelic() {
+            // 加载JSON数据
+            const relicList = await loadRelicData();
+            if (relicList.length === 0) {
+                document.getElementById('relicName').textContent = '数据加载失败';
+                document.getElementById('relicDesc').textContent = '请检查JSON文件是否存在或格式是否正确';
+                return;
+            }
+            
+            // 计算今日索引
+            const index = getTodayRelicIndex(relicList.length);
+            const todayRelic = relicList[index];
+            
+            // 填充图片、名称、介绍
+            document.getElementById("relicImg").src = todayRelic.img;
+            document.getElementById("relicImg").alt = todayRelic.name;
+            document.getElementById("relicName").textContent = todayRelic.name;
+            document.getElementById("relicDesc").textContent = todayRelic.desc;
+            
+            // 显示今日日期（格式化）
+            const today = new Date();
+            const dateStr = today.toLocaleDateString("zh-CN", { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            document.getElementById("todayDate").textContent = dateStr;
+        }
+
+        // 4. 按钮点击事件（保持不变）
+        document.querySelector('.home-btn').addEventListener('click', function() {
+            // 此处直接回到上一页了
+            window.history.back();
+        });
+
+        document.querySelector('.share-btn').addEventListener('click', function() {
+            // 朋友圈分享逻辑（实际项目中需结合微信JS-SDK实现）
+            alert('开发中');
+            // 示例：微信朋友圈分享需调用的核心逻辑（需先引入微信JS-SDK）
+            // wx.ready(function() {
+            //     wx.updateTimelineShareData({
+            //         title: document.getElementById('relicName').textContent,
+            //         link: window.location.href,
+            //         imgUrl: document.getElementById('relicImg').src,
+            //         success: function () {
+            //             alert('分享成功');
+            //         }
+            //     });
+            // });
+        });
+
+        // 页面加载时执行渲染（异步）
+        window.onload = renderTodayRelic;
+    </script>
+</body>
+</html>
