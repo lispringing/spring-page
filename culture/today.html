@@ -200,9 +200,14 @@
                 font-size: 16px;
             }
 
+            /* ========== 关键修改1：平板/小屏设备按钮放大 ========== */
             .apple-btn {
-                height: 44px;
-                font-size: 16px;
+                height: 56px; /* 原44px → 56px */
+                font-size: 18px; /* 原16px → 18px */
+                gap: 10px; /* 图标和文字间距加大 */
+            }
+            .btn-icon {
+                font-size: 22px; /* 图标放大 */
             }
         }
 
@@ -217,11 +222,19 @@
 
             .btn-group {
                 flex-direction: column;
-                gap: 12px;
+                gap: 16px; /* 原12px → 16px，增加按钮间距 */
+                padding: 0 15px; /* 增加左右内边距，让按钮更贴合屏幕 */
             }
 
+            /* ========== 关键修改2：手机端按钮进一步放大 ========== */
             .apple-btn {
-                height: 40px;
+                height: 64px; /* 原40px → 64px，高度大幅增加 */
+                font-size: 20px; /* 原16px → 20px，字体更大 */
+                border-radius: 32px; /* 圆角同步放大，保持比例 */
+                gap: 12px;
+            }
+            .btn-icon {
+                font-size: 24px; /* 图标进一步放大 */
             }
         }
     </style>
