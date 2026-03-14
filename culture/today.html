@@ -6,21 +6,17 @@
     <title>礼乐齐鲁-每日文物</title>
     <link rel="icon" type="image/png" href="./img/logo.png">
     <style>
-        /* 原有样式保持不变，此处省略（可直接复用原代码的style部分） */
         /* 全局重置 & 苹果风格基础配置 */
-            /* 全局样式基础 - 楷体字体体系 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            /* 楷体为主，保留系统字体降级适配 */
             font-family: "楷体", "KaiTi", "STKaiti", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            /* 替换为更贴合文物主题的背景图（可自行替换为本地/在线文物纹理图） */
             background: url('./img/background.png') no-repeat center center / cover fixed;
             color: #1d1d1f;
             min-height: 100vh;
@@ -28,11 +24,10 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            /* 增加背景叠加层，提升内容可读性 */
             position: relative;
         }
 
-        /* 背景叠加层（降低背景亮度，保证文字清晰） */
+        /* 背景叠加层 */
         body::before {
             content: "";
             position: fixed;
@@ -40,15 +35,54 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(245, 245, 247, 0.61); /* 苹果浅灰+半透明 */
+            background-color: rgba(245, 245, 247, 0.61);
             z-index: -1;
         }
 
-        /* 头部标题（苹果风格轻量化） */
+        /* 左上角圆形返回按钮样式 */
+        .circle-back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #1d1d1f;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 999;
+        }
+
+        /* 移动端适配：返回按钮 */
+        @media (max-width: 480px) {
+            .circle-back-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+                top: 15px;
+                left: 15px;
+            }
+        }
+
+        .circle-back-btn:hover {
+            background-color: rgba(245, 245, 247, 0.95);
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 头部标题 */
         .header {
             margin: 30px 0;
             text-align: center;
-            /* 增加文字阴影，提升辨识度 */
             text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
         }
 
@@ -64,17 +98,17 @@
             color: #86868b;
         }
 
-        /* 文物卡片（核心容器，苹果磨砂/圆角风格） */
+        /* 文物卡片 */
         .relic-card {
             width: 100%;
             max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.9); /* 卡片半透明，透出背景 */
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             overflow: hidden;
             transition: transform 0.3s ease;
-            backdrop-filter: blur(10px); /* 苹果磨砂玻璃效果 */
-            -webkit-backdrop-filter: blur(10px); /* 兼容iOS */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .relic-card:hover {
@@ -123,66 +157,117 @@
             color: #86868b;
         }
 
-        /* 苹果风格按钮容器 */
-        .btn-group {
+        /* 日历黄历模块样式 */
+        .calendar-module {
             width: 100%;
             max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 25px 30px;
             margin-top: 30px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
-            gap: 16px;
-            padding: 0 10px;
-        }
-
-        /* 苹果风格按钮通用样式 */
-        .apple-btn {
-            flex: 1;
-            height: 48px;
-            border-radius: 24px;
-            border: none;
-            font-size: 17px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            gap: 20px;
         }
 
-        /* 返回主页按钮（苹果浅灰风格） */
-        .home-btn {
-            background-color: rgba(245, 245, 247, 0.9);
+        /* 日期展示区 */
+        .date-display {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .date-main {
+            font-size: 24px;
+            font-weight: 600;
             color: #1d1d1f;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            margin-bottom: 8px;
         }
 
-        .home-btn:hover {
-            background-color: rgba(232, 232, 237, 0.95);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        .date-lunar {
+            font-size: 16px;
+            color: #86868b;
         }
 
-        /* 分享按钮（苹果蓝色风格，匹配iOS系统按钮） */
-        .share-btn {
-            background-color: rgba(0, 113, 227, 0.9);
-            color: #ffffff;
-            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+        /* 运势展示区 */
+        .fortune-display {
+            flex: 1;
+            min-width: 200px;
+            text-align: right;
         }
 
-        .share-btn:hover {
-            background-color: rgba(0, 119, 237, 0.95);
-            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.4);
+        .fortune-title {
+            font-size: 18px;
+            color: #e67e22;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
 
-        /* 按钮图标（简化版，模拟苹果图标风格） */
-        .btn-icon {
-            font-size: 20px;
+        .fortune-content {
+            font-size: 16px;
+            color: #424245;
+            line-height: 1.5;
         }
 
-        /* 响应式适配（苹果风格多端兼容） */
+        /* 响应式适配：日历模块 */
+        @media (max-width: 768px) {
+            .calendar-module {
+                padding: 20px 25px;
+                gap: 15px;
+            }
+
+            .date-main {
+                font-size: 22px;
+            }
+
+            .fortune-title {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar-module {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .fortune-display {
+                text-align: left;
+                width: 100%;
+            }
+
+            .date-main {
+                font-size: 20px;
+            }
+
+            .relic-img-wrapper {
+                height: 220px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .relic-info {
+                padding: 20px;
+            }
+
+            .relic-name {
+                font-size: 24px;
+            }
+
+            .relic-desc {
+                font-size: 16px;
+            }
+        }
+
+        /* 响应式适配：文物卡片 */
         @media (max-width: 768px) {
             .relic-img-wrapper {
                 height: 300px;
@@ -199,47 +284,13 @@
             .relic-desc {
                 font-size: 16px;
             }
-
-            /* ========== 关键修改1：平板/小屏设备按钮放大 ========== */
-            .apple-btn {
-                height: 56px; /* 原44px → 56px */
-                font-size: 18px; /* 原16px → 18px */
-                gap: 10px; /* 图标和文字间距加大 */
-            }
-            .btn-icon {
-                font-size: 22px; /* 图标放大 */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .relic-img-wrapper {
-                height: 220px;
-            }
-
-            .header h1 {
-                font-size: 28px;
-            }
-
-            .btn-group {
-                flex-direction: column;
-                gap: 16px; /* 原12px → 16px，增加按钮间距 */
-                padding: 0 15px; /* 增加左右内边距，让按钮更贴合屏幕 */
-            }
-
-            /* ========== 关键修改2：手机端按钮进一步放大 ========== */
-            .apple-btn {
-                height: 64px; /* 原40px → 64px，高度大幅增加 */
-                font-size: 20px; /* 原16px → 20px，字体更大 */
-                border-radius: 32px; /* 圆角同步放大，保持比例 */
-                gap: 12px;
-            }
-            .btn-icon {
-                font-size: 24px; /* 图标进一步放大 */
-            }
         }
     </style>
 </head>
 <body>
+    <!-- 左上角圆形返回按钮 -->
+    <button class="circle-back-btn" id="circleBackBtn">←</button>
+
     <div class="header">
         <h1>每日文物</h1>
         <p>每日探索一件珍贵文物，感受历史的温度</p>
@@ -256,24 +307,28 @@
         </div>
     </div>
 
-    <!-- 苹果风格按钮组 -->
-    <div class="btn-group">
-        <button class="apple-btn home-btn">
-            <span class="btn-icon">🏠</span>
-            <span>返回主页</span>
-        </button>
-        <button class="apple-btn share-btn">
-            <span class="btn-icon">📤</span>
-            <span>分享到朋友圈</span>
-        </button>
+    <!-- 日历黄历模块 -->
+    <div class="calendar-module" id="calendarModule">
+        <div class="date-display">
+            <div class="date-main" id="calendarDate">2026年3月13日 星期五</div>
+            <div class="date-lunar" id="lunarDate">农历二月初五</div>
+        </div>
+        <div class="fortune-display">
+            <div class="fortune-title">今日运势</div>
+            <div class="fortune-content" id="fortuneContent">宜：品鉴文物、了解历史 | 忌：浮躁、敷衍</div>
+        </div>
     </div>
 
     <script>
-        // 1. 新增：加载JSON数据的函数
+        // 圆形返回按钮点击事件
+        document.getElementById('circleBackBtn').addEventListener('click', function() {
+            window.history.back();
+        });
+
+        // 加载JSON数据的函数
         async function loadRelicData() {
             try {
-                // 加载本地JSON文件
-                const response = await fetch('./json/index.json');
+                const response = await fetch('./json/today.json');
                 if (!response.ok) {
                     throw new Error(`加载JSON失败：${response.status}`);
                 }
@@ -281,33 +336,26 @@
                 return relicList;
             } catch (error) {
                 console.error('JSON加载出错：', error);
-                // 加载失败时的兜底数据（可选）
                 return [];
             }
         }
 
-        // 2. 原有逻辑：计算今日文物索引（保持不变）
+        // 计算今日文物索引
         function getTodayRelicIndex(relicListLength) {
-            // 获取当前日期的时间戳（仅按日期计算，忽略时分秒）
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             const todayTime = today.getTime();
             
-            // 基准日期（可自定义，比如数据上线日期）
-            const baseDate = new Date(2026, 0, 1); // 2024年1月1日
+            const baseDate = new Date(2026, 0, 1);
             baseDate.setHours(0, 0, 0, 0);
             const baseTime = baseDate.getTime();
             
-            // 计算相差的天数
             const dayDiff = Math.floor((todayTime - baseTime) / (24 * 60 * 60 * 1000));
-            
-            // 按文物列表长度取模，实现循环轮播
             return dayDiff % relicListLength;
         }
 
-        // 3. 修改：渲染今日文物内容（改为异步加载JSON后渲染）
+        // 渲染今日文物内容
         async function renderTodayRelic() {
-            // 加载JSON数据
             const relicList = await loadRelicData();
             if (relicList.length === 0) {
                 document.getElementById('relicName').textContent = '数据加载失败';
@@ -315,17 +363,15 @@
                 return;
             }
             
-            // 计算今日索引
+            // 修复：将 relicListLength 改为 relicList.length
             const index = getTodayRelicIndex(relicList.length);
             const todayRelic = relicList[index];
             
-            // 填充图片、名称、介绍
             document.getElementById("relicImg").src = todayRelic.img;
             document.getElementById("relicImg").alt = todayRelic.name;
             document.getElementById("relicName").textContent = todayRelic.name;
             document.getElementById("relicDesc").textContent = todayRelic.desc;
             
-            // 显示今日日期（格式化）
             const today = new Date();
             const dateStr = today.toLocaleDateString("zh-CN", { 
                 year: 'numeric', 
@@ -335,30 +381,45 @@
             document.getElementById("todayDate").textContent = dateStr;
         }
 
-        // 4. 按钮点击事件（保持不变）
-        document.querySelector('.home-btn').addEventListener('click', function() {
-            // 此处直接回到上一页了
-            window.history.back();
-        });
+        // 生成日历黄历数据
+        function renderCalendar() {
+            const today = new Date();
+            // 渲染公历日期（含星期）
+            const weekDays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const calendarDateStr = today.toLocaleDateString("zh-CN", {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }) + ' ' + weekDays[today.getDay()];
+            document.getElementById('calendarDate').textContent = calendarDateStr;
 
-        document.querySelector('.share-btn').addEventListener('click', function() {
-            // 朋友圈分享逻辑（实际项目中需结合微信JS-SDK实现）
-            alert('开发中');
-            // 示例：微信朋友圈分享需调用的核心逻辑（需先引入微信JS-SDK）
-            // wx.ready(function() {
-            //     wx.updateTimelineShareData({
-            //         title: document.getElementById('relicName').textContent,
-            //         link: window.location.href,
-            //         imgUrl: document.getElementById('relicImg').src,
-            //         success: function () {
-            //             alert('分享成功');
-            //         }
-            //     });
-            // });
-        });
+            // 模拟农历日期（简单版，如需精准可接入农历库）
+            const lunarMonths = ['正月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '冬月', '腊月'];
+            const lunarDays = ['初一', '初二', '初三', '初四', '初五', '初六', '初七', '初八', '初九', '初十',
+                               '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十',
+                               '廿一', '廿二', '廿三', '廿四', '廿五', '廿六', '廿七', '廿八', '廿九', '三十'];
+            // 简化计算：实际需用农历算法，此处仅演示
+            const lunarMonth = lunarMonths[today.getMonth()];
+            const lunarDay = lunarDays[today.getDate() - 1];
+            document.getElementById('lunarDate').textContent = `农历${lunarMonth}${lunarDay}`;
 
-        // 页面加载时执行渲染（异步）
-        window.onload = renderTodayRelic;
+            // 随机生成简单运势（和文物主题匹配）
+            const fortunes = [
+                "宜：品鉴文物、了解历史 | 忌：浮躁、敷衍",
+                "宜：探索古迹、静心思考 | 忌：急躁、粗心",
+                "宜：欣赏古物、感悟文化 | 忌：敷衍、浮躁",
+                "宜：研读历史、品味古韵 | 忌：草率、分心",
+                "宜：参观展馆、增长见识 | 忌：烦躁、马虎"
+            ];
+            const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+            document.getElementById('fortuneContent').textContent = randomFortune;
+        }
+
+        // 页面加载时执行渲染
+        window.onload = function() {
+            renderTodayRelic();
+            renderCalendar();
+        };
     </script>
 </body>
 </html>

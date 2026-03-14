@@ -726,6 +726,13 @@
         let currentAge = 'all';
         let currentArea = '';
 
+        // 配置多个JSON数据源路径
+        const jsonFilePaths = [
+            './json/pic.json',
+            './json/1.json'
+            // 可继续添加更多JSON文件路径
+        ];
+
         // DOM元素
         const mapContainer = document.getElementById('mapContainer');
         const areaModal = document.getElementById('areaModal');
@@ -739,12 +746,21 @@
         const closeModal = document.getElementById('closeModal');
         const loadingTip = document.getElementById('loadingTip');
 
-        // 1. 加载JSON数据
+        // 1. 加载多个JSON文件并合并数据
         async function loadRelicsData() {
             try {
-                const response = await fetch('./json/relics.json');
-                if (!response.ok) throw new Error('数据加载失败');
-                relicsData = await response.json();
+                // 并行加载所有JSON文件
+                const fetchPromises = jsonFilePaths.map(path => 
+                    fetch(path).then(response => {
+                        if (!response.ok) throw new Error(`加载${path}失败`);
+                        return response.json();
+                    })
+                );
+                
+                // 等待所有请求完成并合并数据
+                const allData = await Promise.all(fetchPromises);
+                relicsData = allData.flat(); // 扁平化数组（合并多个JSON的数组）
+
                 loadingTip.remove(); // 移除加载提示
                 renderRelicGrid(); // 初始化渲染卡片
             } catch (error) {

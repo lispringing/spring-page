@@ -22,6 +22,31 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            position: relative; /* 新增：为返回按钮定位提供参考 */
+        }
+        /* 新增：返回按钮样式 */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #8c3f21;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            z-index: 9999; /* 确保按钮在最上层 */
+            border: none;
+        }
+        .back-btn:hover {
+            background: #703018;
+            transform: scale(1.05);
         }
         .container {
             width: 100%;
@@ -166,6 +191,14 @@
         }
         /* 适配移动端 */
         @media (max-width: 768px) {
+            /* 移动端调整返回按钮大小和位置 */
+            .back-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+                top: 15px;
+                left: 15px;
+            }
             .options {
                 grid-template-columns: 1fr;
             }
@@ -181,6 +214,9 @@
     </style>
 </head>
 <body>
+    <!-- 新增：返回按钮 -->
+    <button class="back-btn" id="backBtn">←</button>
+    
     <div class="container">
         <div class="header">
             <h1>礼乐寻音 - 文物人格鉴定书</h1>
@@ -280,6 +316,7 @@
         const quizContainer = document.getElementById('quizContainer');
         const resultContainer = document.getElementById('resultContainer');
         const restartBtn = document.getElementById('restartBtn');
+        const backBtn = document.getElementById('backBtn'); // 新增：获取返回按钮
         
         let currentQuestion = 0;
         let answers = {};
@@ -483,6 +520,14 @@
             resultContainer.style.display = 'none';
             // 显示第一题
             showQuestion(0);
+        });
+
+        // 新增：返回按钮点击事件
+        backBtn.addEventListener('click', () => {
+            // 默认返回上一页，可根据需求修改
+            window.history.back();
+            // 如果需要跳转到指定页面，替换为：
+            // window.location.href = '你的目标页面URL';
         });
 
         // 初始化显示第一题

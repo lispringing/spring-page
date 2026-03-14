@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>礼乐齐鲁文创商城</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", "PingFang SC", sans-serif;
+        }
+
+        /* 页面背景 - 可替换background中的图片路径 */
+        body {
+            background: url("./img/mall-bg.jpg") no-repeat fixed center/cover;
+            background-color: #f8f9fa; /* 背景图加载失败时的兜底色 */
+            color: #333;
+            min-height: 100vh;
+            padding: 20px 0 50px;
+            position: relative;
+        }
+
+        /* 背景遮罩层 - 提升文字可读性 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: -1;
+        }
+
+        /* 圆形返回按钮 */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #8c3f21;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            z-index: 90;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #703018;
+        }
+
+        /* 商品列表容器 */
+        .product-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding-top: 20px;
+        }
+
+        /* 商品卡片样式 */
+        .product-card {
+            background-color: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .product-desc {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        .product-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e63946;
+        }
+
+        .original-price {
+            font-size: 12px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 5px;
+        }
+
+        /* 商品详情弹窗样式 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 25px;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            color: #999;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .modal-product-img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-product-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .modal-product-price {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e63946;
+        }
+
+        .modal-original-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+
+        .modal-product-desc {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .modal-product-detail {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* 响应式适配 - 移动端 */
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 15px;
+            }
+
+            .product-img {
+                height: 150px;
+            }
+
+            .product-title {
+                font-size: 14px;
+            }
+
+            .price {
+                font-size: 16px;
+            }
+
+            .modal-product-title {
+                font-size: 20px;
+            }
+
+            .modal-price {
+                font-size: 24px;
+            }
+
+            .modal-product-desc {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .product-card {
+                border-radius: 8px;
+            }
+
+            .product-info {
+                padding: 10px;
+            }
+
+            .product-desc {
+                display: none; /* 移动端隐藏商品描述，节省空间 */
+            }
+
+            .back-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .modal-content {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 圆形返回按钮 -->
+    <button class="back-btn">←</button>
+
+    <!-- 商品列表 -->
+    <div class="product-container">
+        <!-- 商品1 -->
+        <div class="product-card" data-product='{
+            "title": "青铜编钟复刻摆件",
+            "img": "./img/product1.jpg",
+            "price": "¥199",
+            "originalPrice": "¥299",
+            "desc": "仿战国曾侯乙编钟迷你复刻版，青铜材质，精美纹饰，适合收藏摆放",
+            "detail": "1. 材质：优质青铜铸造，表面做旧处理，还原古编钟质感；2. 尺寸：整体高度约20cm，宽15cm，单个编钟直径3-8cm不等；3. 工艺：失蜡法铸造，手工打磨纹饰，细节精致；4. 配件：含实木底座、收藏证书、防尘罩；5. 适用场景：家居摆件、书房装饰、文化礼品、收藏鉴赏。"
+        }'>
+            <img src="./img/product1.jpg" alt="青铜编钟复刻摆件" class="product-img">
+            <div class="product-info">
+                <h3 class="product-title">青铜编钟复刻摆件</h3>
+                <p class="product-desc">仿战国曾侯乙编钟迷你复刻版，青铜材质，精美纹饰，适合收藏摆放</p>
+                <div class="product-price">
+                    <div>
+                        <span class="price">¥199</span>
+                        <span class="original-price">¥299</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 商品2 -->
+        <div class="product-card" data-product='{
+            "title": "汉画像石主题书签",
+            "img": "./img/product2.jpg",
+            "price": "¥59",
+            "originalPrice": "¥89",
+            "desc": "精选山东汉画像石乐舞图案，黄铜材质镀金，一套6枚，文创礼品首选",
+            "detail": "1. 材质：H62黄铜镀金，抗氧化处理，经久耐用；2. 规格：单枚书签长12cm，宽1.5cm，厚度0.3mm；3. 图案：精选山东汉画像石经典乐舞、车马、宴饮等6种图案；4. 工艺：激光雕刻，镂空设计，边缘抛光；5. 包装：精美礼盒包装，配手提袋，适合送礼；6. 适用场景：阅读标记、文创收藏、商务礼品、学生奖品。"
+        }'>
+            <img src="./img/product2.jpg" alt="汉画像石主题书签" class="product-img">
+            <div class="product-info">
+                <h3 class="product-title">汉画像石主题书签</h3>
+                <p class="product-desc">精选山东汉画像石乐舞图案，黄铜材质镀金，一套6枚，文创礼品首选</p>
+                <div class="product-price">
+                    <div>
+                        <span class="price">¥59</span>
+                        <span class="original-price">¥89</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 商品3 -->
+        <div class="product-card" data-product='{
+            "title": "陶埙文创摆件",
+            "img": "./img/product3.jpg",
+            "price": "¥129",
+            "originalPrice": "¥169",
+            "desc": "仿仰韶文化陶埙复刻，可吹奏，配实木底座，传统文化艺术摆件",
+            "detail": "1. 材质：高温陶土，手工捏制，低温烧制；2. 规格：埙体直径约8cm，高度约10cm，8孔设计；3. 工艺：手工雕刻纹饰，自然窑变釉色，每款独一无二；4. 配件：实木底座、吹奏教程、锦盒包装；5. 音质：音准准确，音色浑厚，适合初学和摆件两用；6. 保养：避免摔落、避免长时间接触水，用干布擦拭即可。"
+        }'>
+            <img src="./img/product3.jpg" alt="陶埙文创摆件" class="product-img">
+            <div class="product-info">
+                <h3 class="product-title">陶埙文创摆件</h3>
+                <p class="product-desc">仿仰韶文化陶埙复刻，可吹奏，配实木底座，传统文化艺术摆件</p>
+                <div class="product-price">
+                    <div>
+                        <span class="price">¥129</span>
+                        <span class="original-price">¥169</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 商品4 -->
+        <div class="product-card" data-product='{
+            "title": "齐鲁礼乐主题帆布包",
+            "img": "./img/product4.jpg",
+            "price": "¥79",
+            "originalPrice": "¥99",
+            "desc": "纯棉帆布材质，原创礼乐图案设计，大容量，耐磨耐用，文艺通勤",
+            "detail": "1. 材质：16安纯棉帆布，加厚耐磨，环保染色；2. 规格：长40cm，高35cm，侧宽10cm，肩带长120cm（可调节）；3. 工艺：丝网印刷，图案清晰，不易掉色；4. 设计：原创齐鲁礼乐图案，内贴口袋，加固缝线；5. 功能：大容量，可放14寸笔记本电脑，适合通勤、购物、出游；6. 洗涤：建议手洗，阴干，不可暴晒，不可漂白。"
+        }'>
+            <img src="./img/product4.jpg" alt="齐鲁礼乐主题帆布包" class="product-img">
+            <div class="product-info">
+                <h3 class="product-title">齐鲁礼乐主题帆布包</h3>
+                <p class="product-desc">纯棉帆布材质，原创礼乐图案设计，大容量，耐磨耐用，文艺通勤</p>
+                <div class="product-price">
+                    <div>
+                        <span class="price">¥79</span>
+                        <span class="original-price">¥99</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 商品5 -->
+        <div class="product-card" data-product='{
+            "title": "玉磬纹样陶瓷杯",
+            "img": "./img/product5.jpg",
+            "price": "¥89",
+            "originalPrice": "¥129",
+            "desc": "高温白瓷材质，手绘玉磬传统纹样，带盖防烫，办公家用皆宜",
+            "detail": "1. 材质：高白瓷，1380℃高温烧制，无铅无镉，健康安全；2. 规格：容量450ml，杯高12cm，口径8cm，带硅胶隔热套；3. 工艺：手工绘制玉磬传统纹样，釉上彩工艺，色彩鲜艳；4. 设计：带防尘盖，杯底防滑设计，杯身流线型握感舒适；5. 功能：适合装热水、茶、咖啡等，办公家用均可；6. 保养：可微波炉加热，不可明火直烧，建议手洗。"
+        }'>
+            <img src="./img/product5.jpg" alt="玉磬纹样陶瓷杯" class="product-img">
+            <div class="product-info">
+                <h3 class="product-title">玉磬纹样陶瓷杯</h3>
+                <p class="product-desc">高温白瓷材质，手绘玉磬传统纹样，带盖防烫，办公家用皆宜</p>
+                <div class="product-price">
+                    <div>
+                        <span class="price">¥89</span>
+                        <span class="original-price">¥129</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 商品6 -->
+        <div class="product-card" data-product='{
+            "title": "礼乐齐鲁礼盒套装",
+            "img": "./img/product6.jpg",
+            "price": "¥399",
+            "originalPrice": "¥599",
+            "desc": "含书签、笔记本、陶瓷杯、帆布包，全套礼乐主题设计，高端礼品",
+            "detail": "1. 包含单品：汉画像石书签6枚、礼乐主题笔记本1本、玉磬纹样陶瓷杯1个、齐鲁礼乐帆布包1个；2. 材质：各单品保持原有优质材质，礼盒为硬纸板覆特种纸；3. 规格：礼盒尺寸45*30*15cm，手提式设计，送礼大气；4. 工艺：全套统一礼乐主题设计，细节精致，品质把控严格；5. 适用场景：商务礼品、文化交流礼品、企业伴手礼、节日送礼；6. 定制：支持企业LOGO定制（需提前沟通）。"
+        }'>
+            <img src="./img/product6.jpg" alt="礼乐齐鲁礼盒套装" class="product-img">
+            <div class="product-info">
+                <h3 class="product-title">礼乐齐鲁礼盒套装</h3>
+                <p class="product-desc">含书签、笔记本、陶瓷杯、帆布包，全套礼乐主题设计，高端礼品</p>
+                <div class="product-price">
+                    <div>
+                        <span class="price">¥399</span>
+                        <span class="original-price">¥599</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 商品详情弹窗 -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <img src="" alt="" class="modal-product-img">
+            <h2 class="modal-product-title"></h2>
+            <div class="modal-product-price">
+                <span class="modal-price"></span>
+                <span class="modal-original-price"></span>
+            </div>
+            <div class="modal-product-desc"></div>
+            <div class="modal-product-detail"></div>
+        </div>
+    </div>
+
+    <script>
+        // 返回按钮点击事件（可根据需求修改跳转逻辑）
+        const backBtn = document.querySelector('.back-btn');
+        backBtn.addEventListener('click', () => {
+            // 此处可修改为实际返回逻辑，比如返回上一页
+            window.history.back();
+            // 如果是静态页面测试，可注释上面一行，打开下面的提示
+            // alert('返回按钮被点击');
+        });
+
+        // 商品详情弹窗相关
+        const modal = document.getElementById('productModal');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const productCards = document.querySelectorAll('.product-card');
+
+        // 打开弹窗
+        productCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // 获取商品数据
+                const productData = JSON.parse(card.dataset.product);
+                
+                // 填充弹窗内容
+                document.querySelector('.modal-product-img').src = productData.img;
+                document.querySelector('.modal-product-img').alt = productData.title;
+                document.querySelector('.modal-product-title').textContent = productData.title;
+                document.querySelector('.modal-price').textContent = productData.price;
+                document.querySelector('.modal-original-price').textContent = productData.originalPrice;
+                document.querySelector('.modal-product-desc').textContent = productData.desc;
+                document.querySelector('.modal-product-detail').innerHTML = productData.detail.replace(/;/g, '<br>');
+                
+                // 显示弹窗
+                modal.classList.add('active');
+                // 禁止页面滚动
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // 关闭弹窗
+        function closeModal() {
+            modal.classList.remove('active');
+            // 恢复页面滚动
+            document.body.style.overflow = '';
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // 点击弹窗外层关闭弹窗
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // 按ESC键关闭弹窗
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
