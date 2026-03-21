@@ -9,5 +9,3 @@
     一个仿Apple风格的个人主页
   </p>
 </p>
-
-[![Library][library-screenshot]](https://music.qier222.com)
