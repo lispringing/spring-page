@@ -24,57 +24,37 @@
             position: relative; /* 为弹窗绝对定位提供基准 */
         }
 
-        /* 导航栏样式 */
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-        }
-
-        .logo-text {
-            font-size: 1.5rem;
-            color: #1d1d1f;
-            font-weight: 600;
-        }
-
+        /* 返回按钮样式 - 圆形设计 */
         .back-btn {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
             background-color: #1d1d1f;
             color: white;
             border: none;
-            padding: 0.5rem 1.2rem;
-            border-radius: 8px;
+            border-radius: 50%; /* 改为圆形 */
+            width: 3.5rem; /* 固定宽高实现正圆 */
+            height: 3.5rem;
             font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease; /* 增加所有属性过渡 */
+            z-index: 1000; /* 最高层级，确保不被遮挡 */
+            display: flex; /* 居中对齐文字 */
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* 增加阴影提升质感 */
         }
 
         .back-btn:hover {
             background-color: #3a3a3a;
+            transform: scale(1.05); /* hover时轻微放大 */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* 页面标题区域 */
+        /* 页面标题区域 - 调整上边距，适配返回按钮 */
         .page-header {
             text-align: center;
-            padding: 2.5rem 1rem;
+            padding: 4rem 1rem 2.5rem; /* 增加上边距，避免被返回按钮遮挡 */
         }
 
         .page-title {
@@ -543,24 +523,18 @@
                 padding: 0.4rem 1rem;
                 font-size: 0.95rem;
             }
-
-            .navbar {
-                padding: 1rem;
-            }
             
-            .logo-text {
-                font-size: 1.2rem;
-            }
-            
+            /* 移动端圆形返回按钮适配 */
             .back-btn {
-                padding: 0.4rem 0.8rem;
+                width: 3rem;
+                height: 3rem;
                 font-size: 0.9rem;
             }
         }
 
         @media (max-width: 576px) {
             .page-header {
-                padding: 1.8rem 1rem;
+                padding: 3.5rem 1rem 1.8rem; /* 移动端微调上边距 */
             }
             
             .filter-tag {
@@ -590,18 +564,21 @@
                 padding: 0.3rem 0.6rem;
                 font-size: 0.8rem;
             }
+            
+            /* 小屏移动端圆形返回按钮进一步适配 */
+            .back-btn {
+                top: 0.8rem;
+                left: 0.8rem;
+                width: 2.8rem;
+                height: 2.8rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <a href="index.html" class="logo">
-            <img src="./img/logo.png" alt="礼乐齐鲁logo" class="logo-img">
-            <span class="logo-text">礼乐齐鲁</span>
-        </a>
-        <button class="back-btn" onclick="window.history.back()">返回上一页</button>
-    </nav>
+    <!-- 独立圆形返回按钮 -->
+    <button class="back-btn" onclick="window.history.back()">←</button>
 
     <!-- 页面标题 -->
     <header class="page-header">
@@ -681,7 +658,7 @@
     </section>
 
     <!-- 数据统计提示 -->
-    <div class="data-count" id="dataCount">当前显示：全部类型 - 全部年代 (共68件文物)</div>
+    <div class="data-count" id="dataCount">当前显示：全部类型 - 全部年代</div>
 
     <!-- 文物卡片列表 -->
     <section class="relics-grid" id="relicsGrid">
@@ -731,7 +708,8 @@
         const jsonFilePaths = [
             './json/pic.json',
             './json/music.json',
-            './json/dancer.json'
+            './json/dancer.json',
+            './json/stone.json'
             // 可继续添加更多JSON文件路径
         ];
 
